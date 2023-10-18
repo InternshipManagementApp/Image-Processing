@@ -20,7 +20,7 @@ namespace ImageToText_Tesseract
         {
 
             Program p = new Program();
-            FileInfo[] images = p.getImages("../../Images");
+            FileInfo[] images = p.getImages("../../ImagesClock");
             string filePath = "../../result.txt";
             if (File.Exists(filePath)) // Check if file exists
             {
@@ -38,11 +38,12 @@ namespace ImageToText_Tesseract
                 using (var Input = new OcrInput()) //object to the image
                 {
                 
-                        Input.AddImage(image.FullName); //add images to the input with a route
-                        Input.ToGrayScale(); //color picture to grayscale
-                        var Result = Ocr.Read(Input);  //read from the image the characters
+                    Input.AddImage(image.FullName); //add images to the input with a route
+                    Input.Binarize(); //color picture to binary
+                    //Input.ToGrayScale(); // color picture to grayscale
+                    var Result = Ocr.Read(Input);  //read from the image the characters
 
-                        File.AppendAllText(filePath, image.Name + " " + Result.Text +  Environment.NewLine);
+                     File.AppendAllText(filePath, image.Name + " " + Result.Text +  Environment.NewLine);
                 
                 
                 }
